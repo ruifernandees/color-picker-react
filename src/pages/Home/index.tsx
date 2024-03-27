@@ -13,4 +13,4 @@ export const Home: React.FC = () => {
       </ContentContainer>
     </Container>
   )
-}
+};

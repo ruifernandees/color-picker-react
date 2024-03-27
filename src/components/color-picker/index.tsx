@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { availableColors } from './data';
 import { ColorGroup, ColorOption, LinkIcon, MainContainer, Title } from './styles';
 import { Check } from '@mui/icons-material';
-import { getTextColor } from '../../helpers/getTextColor';
+import { getTextColor } from './helpers/getTextColor';
 import { Slider, Snackbar } from '@mui/material';
 import { EColorType } from './props';
 

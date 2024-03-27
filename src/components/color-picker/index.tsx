@@ -4,6 +4,7 @@ import { ColorGroup, ColorOption, LinkIcon, MainContainer, Title } from './style
 import { Check } from '@mui/icons-material';
 import { getTextColor } from '../../helpers/getTextColor';
 import { Slider, Snackbar } from '@mui/material';
+import { EColorType } from './props';
 
 export const ColorPickerWidget: React.FC = () => {
   const [selectedColors, setSelectedColors] = useState({
@@ -25,7 +26,7 @@ export const ColorPickerWidget: React.FC = () => {
     }));
   };
 
-  const renderColorOptions = (colors: string[][], colorType: 'primary' | 'secondary') => {
+  const renderColorOptions = (colors: string[][], colorType: EColorType) => {
     return colors.map((option, index) => (
       <ColorOption
         key={index}
@@ -39,7 +40,7 @@ export const ColorPickerWidget: React.FC = () => {
     ));
   };
 
-  const renderCopyButton = (colorType: 'primary' | 'secondary') => {
+  const renderCopyButton = (colorType: EColorType) => {
     return <LinkIcon onClick={() => {
       setFeedbackOpen(true)
       navigator.clipboard.writeText(availableColors[colorType][selectedColors[colorType]][selectedShades[colorType]]);
@@ -50,8 +51,8 @@ export const ColorPickerWidget: React.FC = () => {
     <MainContainer>
       <Title>Primary color</Title>
       <ColorGroup>
-        {renderColorOptions(availableColors.primary, 'primary')}
-        {renderCopyButton('primary')}
+        {renderColorOptions(availableColors.primary, EColorType.PRIMARY)}
+        {renderCopyButton(EColorType.PRIMARY)}
       </ColorGroup>
       <Slider
         aria-label="Primary colors shade"
@@ -69,8 +70,8 @@ export const ColorPickerWidget: React.FC = () => {
       />
       <Title>Secondary color</Title>
       <ColorGroup>
-        {renderColorOptions(availableColors.secondary, 'secondary')}  
-        {renderCopyButton('secondary')}
+        {renderColorOptions(availableColors.secondary, EColorType.SECONDARY)}  
+        {renderCopyButton(EColorType.SECONDARY)}
       </ColorGroup>
       <Slider
         aria-label="Secondary colors shade"

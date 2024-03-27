@@ -33,6 +33,8 @@ export const ColorPickerWidget: React.FC = () => {
         color={option[selectedShades[colorType]]}
         onClick={() => handleColorSelection(colorType, index)}
         aria-label={`${option[selectedShades[colorType]]} color with shade ${selectedShades[colorType]}, ${colorType === EColorType.PRIMARY ? 'Primary' : 'Secondary'}`}
+        role="option"
+        aria-selected={selectedColors[colorType] === index ? 'true' : 'false'}
       >
         {selectedColors[colorType] === index && (
           <Check 
@@ -50,6 +52,8 @@ export const ColorPickerWidget: React.FC = () => {
         setFeedbackOpen(true)
         navigator.clipboard.writeText(availableColors[colorType][selectedColors[colorType]][selectedShades[colorType]]);
       }} 
+      role="button"
+
       aria-label={`Copy ${colorType === EColorType.PRIMARY ? 'Primary' : 'Secondary'} color code to clipboard`}
     />
   }
@@ -57,7 +61,7 @@ export const ColorPickerWidget: React.FC = () => {
   return (
     <MainContainer>
       <Title>Primary color</Title>
-      <ColorGroup aria-label="Primary colors">
+      <ColorGroup aria-label="Primary colors" role="listbox" aria-orientation="horizontal">
         {renderColorOptions(availableColors.primary, EColorType.PRIMARY)}
         {renderCopyButton(EColorType.PRIMARY)}
       </ColorGroup>
@@ -74,9 +78,13 @@ export const ColorPickerWidget: React.FC = () => {
           primary: newValue as number
         }))}
         max={4}
+        role="slider"
+        aria-valuemin={0}
+        aria-valuemax={4}
+        aria-valuenow={selectedShades.primary}
       />
       <Title>Secondary color</Title>
-      <ColorGroup aria-label="Secondary colors">
+      <ColorGroup aria-label="Secondary colors" role="listbox" aria-orientation="horizontal">
         {renderColorOptions(availableColors.secondary, EColorType.SECONDARY)}  
         {renderCopyButton(EColorType.SECONDARY)}
       </ColorGroup>
@@ -93,6 +101,10 @@ export const ColorPickerWidget: React.FC = () => {
           secondary: newValue as number
         }))}
         max={4}
+        role="slider"
+        aria-valuemin={0}
+        aria-valuemax={4}
+        aria-valuenow={selectedShades.secondary}
       />
       <Snackbar
         open={feedbackOpen}
@@ -100,6 +112,7 @@ export const ColorPickerWidget: React.FC = () => {
         onClose={() => setFeedbackOpen(() => false)}
         message="Copied to clipboard"
         aria-label="Snackbar notification: copied to clipboard"
+        role="alert"
       />
   </MainContainer>
   );

@@ -32,30 +32,37 @@ export const ColorPickerWidget: React.FC = () => {
         key={index}
         color={option[selectedShades[colorType]]}
         onClick={() => handleColorSelection(colorType, index)}
+        aria-label={`${option[selectedShades[colorType]]} color with shade ${selectedShades[colorType]}, ${colorType === EColorType.PRIMARY ? 'Primary' : 'Secondary'}`}
       >
         {selectedColors[colorType] === index && (
-          <Check style={{ color: getTextColor(option[selectedShades[colorType]]) }} />
+          <Check 
+            style={{ color: getTextColor(option[selectedShades[colorType]]) }} 
+            aria-hidden="true"
+          />
         )}
       </ColorOption>
     ));
   };
 
   const renderCopyButton = (colorType: EColorType) => {
-    return <LinkIcon onClick={() => {
-      setFeedbackOpen(true)
-      navigator.clipboard.writeText(availableColors[colorType][selectedColors[colorType]][selectedShades[colorType]]);
-    }} />
+    return <LinkIcon 
+      onClick={() => {
+        setFeedbackOpen(true)
+        navigator.clipboard.writeText(availableColors[colorType][selectedColors[colorType]][selectedShades[colorType]]);
+      }} 
+      aria-label={`Copy ${colorType === EColorType.PRIMARY ? 'Primary' : 'Secondary'} color code to clipboard`}
+    />
   }
 
   return (
     <MainContainer>
       <Title>Primary color</Title>
-      <ColorGroup>
+      <ColorGroup aria-label="Primary colors">
         {renderColorOptions(availableColors.primary, EColorType.PRIMARY)}
         {renderCopyButton(EColorType.PRIMARY)}
       </ColorGroup>
       <Slider
-        aria-label="Primary colors shade"
+        aria-label="Primary colors shade slider"
         defaultValue={0}
         valueLabelDisplay="auto"
         shiftStep={1}
@@ -69,12 +76,12 @@ export const ColorPickerWidget: React.FC = () => {
         max={4}
       />
       <Title>Secondary color</Title>
-      <ColorGroup>
+      <ColorGroup aria-label="Secondary colors">
         {renderColorOptions(availableColors.secondary, EColorType.SECONDARY)}  
         {renderCopyButton(EColorType.SECONDARY)}
       </ColorGroup>
       <Slider
-        aria-label="Secondary colors shade"
+        aria-label="Secondary colors shade slider"
         defaultValue={0}
         valueLabelDisplay="auto"
         shiftStep={1}
@@ -92,6 +99,7 @@ export const ColorPickerWidget: React.FC = () => {
         autoHideDuration={6000}
         onClose={() => setFeedbackOpen(() => false)}
         message="Copied to clipboard"
+        aria-label="Snackbar notification: copied to clipboard"
       />
   </MainContainer>
   );
